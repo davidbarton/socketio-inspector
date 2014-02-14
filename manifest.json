@@ -1,0 +1,8 @@
+{
+    "name": "Praso rozsireni",
+    "version": "0.9.0",
+    "description": "made with love",
+    "devtools_page": "devtools.html",
+    "options_page": "panel.html",
+    "manifest_version": 2
+}
