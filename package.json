@@ -1,0 +1,21 @@
+{
+  "name": "socketio-inspector",
+  "description": "Made with love to sockets.",
+  "version": "0.1.1",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "private": true,
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "coffee-script": ""
+  },
+  "devDependencies": {
+    "gulp": "",
+    "gulp-util": "",
+    "gulp-clean": "",
+    "gulp-coffeelint": "",
+    "gulp-coffee": ""
+  }
+}

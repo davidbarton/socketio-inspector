@@ -1,0 +1,29 @@
+gulp           = require 'gulp'
+gutil          = require 'gulp-util'
+clean          = require 'gulp-clean'
+coffeelint     = require 'gulp-coffeelint'
+coffee         = require 'gulp-coffee'
+
+gulp.task 'default', () ->
+  gutil.log 'Available gulp tasks:'
+  gutil.log ' *', gutil.colors.magenta('gulp develop'), '- Start development. Watch and build files'
+  gutil.log ' *', gutil.colors.magenta('gulp build'), '- Build whole application'
+  gutil.log ' *', gutil.colors.magenta('gulp clean'), '- Purge /dist folder'
+
+gulp.task 'develop', ['watch']
+
+gulp.task 'build', ['scripts']
+
+gulp.task 'watch', () ->
+  gulp.watch 'src/**/*.coffee', ['scripts']
+
+gulp.task 'scripts', ['clean'], () ->
+  gulp.src 'src/**/*.coffee'
+    .pipe coffeelint({ max_line_length: { value: 160 }})
+    .pipe coffeelint.reporter()
+    .pipe coffee({ bare: true }).on('error', gutil.log)
+    .pipe gulp.dest('dist')
+
+gulp.task 'clean', () ->
+  gulp.src 'dist', { read: false }
+    .pipe clean()
