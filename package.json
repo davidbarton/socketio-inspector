@@ -16,6 +16,7 @@
     "gulp-util": "",
     "gulp-clean": "",
     "gulp-coffeelint": "",
-    "gulp-coffee": ""
+    "gulp-coffee": "",
+    "run-sequence": ""
   }
 }

@@ -10,7 +10,7 @@ For development on your local machine, take the following steps:
 * use nvm to install node and npm `nvm install 0.10`
 * install CoffeeScript and Gulp globally `npm install -g coffee-script gulp`
 * install node modules `npm install`
-* in shell, type `gulp develop` it build your src files into dist dir
+* in shell, type `gulp develop` it builds your src files into dist dir
 * Open [chrome://extensions/](chrome://extensions/)
 * Check "Developer mode" at upper top corner
 * Hit "Load unpacked extension..." and pick project folder

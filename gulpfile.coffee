@@ -3,6 +3,7 @@ gutil          = require 'gulp-util'
 clean          = require 'gulp-clean'
 coffeelint     = require 'gulp-coffeelint'
 coffee         = require 'gulp-coffee'
+sequence       = require 'run-sequence'
 
 gulp.task 'default', () ->
   gutil.log 'Available gulp tasks:'
@@ -10,7 +11,8 @@ gulp.task 'default', () ->
   gutil.log ' *', gutil.colors.magenta('gulp build'), '- Build whole application'
   gutil.log ' *', gutil.colors.magenta('gulp clean'), '- Purge /dist folder'
 
-gulp.task 'develop', ['watch']
+gulp.task 'develop', () ->
+  sequence 'build', 'watch'
 
 gulp.task 'build', ['scripts']
 
