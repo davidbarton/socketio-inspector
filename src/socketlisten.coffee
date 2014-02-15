@@ -5,16 +5,13 @@ sendMessage = (msg) ->
   chrome.runtime.sendMessage extensionId, msg, (res) ->
     console.log res if res?
 
-do ->
-  emit = socket.emit
-  socket.emit = (arg...) ->
-    console.log '***','emit', Array.prototype.slice.call arguments
-    emit.apply socket, arg
-  $emit = socket.$emit
-  socket.$emit (arg...) ->
-    console.log '***','on',Array.prototype.slice.call arguments
-    $emit.apply socket, arg
+hack = (name, socket) ->
+  fn = socket[name]
+  socket[name] = (arg...) ->
+    sendMessage JSON.stringify arg
+    fn.apply socket, arg
 
-setTimeout () ->
-  sendMessage "io:v:#{io.version}"
-, 10000
+for k, socket of io.sockets
+  for e, namespace of socket.namespaces
+    for name in ['emit', '$emit']
+      hack name, namespace
