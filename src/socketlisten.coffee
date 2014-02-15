@@ -7,6 +7,7 @@ sendMessage = (msg) ->
   chrome.runtime.sendMessage extensionId, msg, (res) ->
     console.log res if res?
 
+###
 `
 (function() {
   var emit = socket.emit;
@@ -21,5 +22,8 @@ sendMessage = (msg) ->
   };
 })();
 `
+###
 
-sendMessage "io:v:#{io.version}"
+setTimeout () ->
+  sendMessage "io:v:#{io.version}"
+, 10000

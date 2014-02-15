@@ -10,7 +10,7 @@ chrome.extension.onConnect.addListener (port) ->
     delete ports[port.portId_]
   port.onMessage.addListener (msg) ->
     #console.log 'i have msg: ', msg
-  #notifyDevtools "puihiu"
+  #sendToPanel "puihiu"
 
 chrome.runtime.onMessageExternal.addListener (msg, sender, sendResponse) ->
-  notifyDevtools msg
+  sendToPanel msg
