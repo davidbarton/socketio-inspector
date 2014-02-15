@@ -3,6 +3,7 @@ gutil          = require 'gulp-util'
 clean          = require 'gulp-clean'
 coffeelint     = require 'gulp-coffeelint'
 coffee         = require 'gulp-coffee'
+react          = require 'gulp-react'
 sequence       = require 'run-sequence'
 
 gulp.task 'default', () ->
@@ -21,9 +22,10 @@ gulp.task 'watch', () ->
 
 gulp.task 'scripts', ['clean'], () ->
   gulp.src 'src/**/*.coffee'
-    .pipe coffeelint({ max_line_length: { value: 160 }})
-    .pipe coffeelint.reporter()
+    #.pipe coffeelint({ max_line_length: { value: 160 }, no_backticks: { value: 'ignore'} })
+    #.pipe coffeelint.reporter()
     .pipe coffee({ bare: true }).on('error', gutil.log)
+    .pipe react()
     .pipe gulp.dest('dist')
 
 gulp.task 'clean', () ->
