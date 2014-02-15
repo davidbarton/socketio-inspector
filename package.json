@@ -18,6 +18,7 @@
     "gulp-coffeelint": "",
     "gulp-coffee": "",
     "gulp-react": "",
+    "gulp-less": "",
     "run-sequence": ""
   }
 }

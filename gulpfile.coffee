@@ -5,6 +5,7 @@ coffeelint     = require 'gulp-coffeelint'
 coffee         = require 'gulp-coffee'
 react          = require 'gulp-react'
 sequence       = require 'run-sequence'
+less       = require 'gulp-less'
 
 gulp.task 'default', () ->
   gutil.log 'Available gulp tasks:'
@@ -15,10 +16,11 @@ gulp.task 'default', () ->
 gulp.task 'develop', () ->
   sequence 'build', 'watch'
 
-gulp.task 'build', ['scripts']
+gulp.task 'build', ['scripts', 'less']
 
 gulp.task 'watch', () ->
   gulp.watch 'src/**/*.coffee', ['scripts']
+  gulp.watch 'less/*.less', ['less']
 
 gulp.task 'scripts', ['clean'], () ->
   gulp.src 'src/**/*.coffee'
@@ -31,3 +33,8 @@ gulp.task 'scripts', ['clean'], () ->
 gulp.task 'clean', () ->
   gulp.src 'dist', { read: false }
     .pipe clean()
+
+gulp.task 'less', () ->
+  gulp.src 'less/*.less'
+    .pipe less({ compress: true })
+    .pipe gulp.dest('css')
