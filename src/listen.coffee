@@ -12,7 +12,7 @@ AppContext = React.createClass
   render: () ->
     itemsData = this.state.data
     detailData = if (index = this.state.selected)? then this.state.data[index] else null
-    `<div id="appContext" onClick={this.handleClick}>
+    `<div id="appContext" onClick={this.handleClick} className="toolbar toolbar-background">
       <div id="leftPanel">Left:<ItemsList data={itemsData} /></div>
       <div id="rightPanel">Right:<Detail data={detailData} /></div>
     </div>`
