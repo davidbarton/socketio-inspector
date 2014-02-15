@@ -10,7 +10,7 @@
     "js": ["dist/inject.js"],
     "run_at": "document_start"
   }],
-  "web_accessible_resources": ["dist/socketlistener.js"],
+  "web_accessible_resources": ["dist/socketlisten.js"],
   "externally_connectable": {
     "matches": ["*://*.tv.ccl/*"]
   },
