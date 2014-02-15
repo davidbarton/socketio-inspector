@@ -8,8 +8,17 @@ sendMessage = (msg) ->
 hack = (name, socket) ->
   fn = socket[name]
   socket[name] = (arg...) ->
-    sendMessage JSON.stringify arg
-    fn.apply socket, arguments
+    payload =
+        args: Array.prototype.slice.call arg
+        name: name
+        socket:
+          sessionid: socket.socket.sessionid
+          transport: socket.socket.transport.name
+          host: socket.socket.options.host
+          port: socket.socket.options.port
+        time: (new Date).getTime()
+    sendMessage JSON.stringify payload
+    fn.apply socket, arg
 
 socketHack = ->
   for k, socket of io.sockets

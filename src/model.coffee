@@ -3,8 +3,8 @@ class Model
   constructor: ->
     @items = []
 
-  addItem: (data) ->
-    @items.push new ModelItem data
+  addItem: (msg) ->
+    @items.push new ModelItem JSON.parse msg
     i.setFriends @items for i in @items
 
   clear: ->

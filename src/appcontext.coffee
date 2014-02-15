@@ -4,14 +4,14 @@
 
 AppContext = React.createClass
   getInitialState: () ->
-    data: [ {reqId: 'init0', reqData: {data: 'abcd0'}}]
+    items: []
 
   handleClick: (e) ->
     this.setState selected: e.selectedIndex
 
   render: () ->
-    itemsData = this.state.data
-    detailData = if (index = this.state.selected)? then this.state.data[index].getData() else ''
+    itemsData = this.state.items
+    detailData = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].rawData else ''
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
         <div className="col name">Name <div className="under">Path</div></div>
@@ -23,11 +23,13 @@ AppContext = React.createClass
       </div>
     </div>`
 
+
 ItemsList = React.createClass
   render: () ->
     items = this.props.data.map (item, index) ->
       `<Item data={item} index={index} />`
     return `<ul>{items}</ul>`
+
 
 Item = React.createClass
   handleClick: (e) ->
@@ -37,11 +39,21 @@ Item = React.createClass
   render: () ->
     `<li onClick={this.handleClick}>{this.props.index}</li>`
 
+
 Detail = React.createClass
+
+  formatObjectAsHtml: (obj) ->
+    el = prettyPrint this.props.data.args,
+      expanded: true
+      maxDeph: 10
+    el.outerHTML
+
   render: () ->
-    `<div id="itemDetail">
-      {this.props.data}
-    </div>`
+    html = ""
+    if this.props.data
+      html += this.formatObjectAsHtml this.props.data.args
+      html += this.formatObjectAsHtml this.props.data.socket
+    `<div id="itemDetail" dangerouslySetInnerHTML={{__html: html}} />`
 
 
 appContext = React.renderComponent `<AppContext />`, document.getElementById 'content'
