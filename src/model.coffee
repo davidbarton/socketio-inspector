@@ -30,4 +30,4 @@ class ModelItem
   setFriends: (items) ->
     for i in items
       continue if i is @
-      @friends.push i.getData() if i.getId() is @getId()
+      # @friends.push i.getData() if i.getId() is @getId()

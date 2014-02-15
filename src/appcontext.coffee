@@ -11,7 +11,7 @@ AppContext = React.createClass
 
   render: () ->
     itemsData = this.state.data
-    detailData = if (index = this.state.selected)? then this.state.data[index] else null
+    detailData = if (index = this.state.selected)? then this.state.data[index].getData() else ''
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
         <div className="col name">Name <div className="under">Path</div></div>
