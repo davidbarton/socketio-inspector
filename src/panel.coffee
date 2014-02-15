@@ -2,6 +2,10 @@
 @jsx React.DOM
 ###
 
+port = chrome.extension.connect { name: "socketio-inspector" }
+port.onMessage.addListener (msg) ->
+  console.log 'new message: ', msg
+
 Tweet = React.createClass
   render: () ->
     return `<li>{this.props.text}</li>`
@@ -22,10 +26,7 @@ TweetBox = React.createClass
     return { data: [] }
   componentWillMount: () ->
     self = this
-    chrome.devtools.network.onRequestFinished.addListener (request) ->
-      if request?
-        request.getContent (data, encoding) ->
-          self.addTweet data
+    # add content here
   render: () ->
     return `<div><h1>Hello</h1><TweetList data={this.state.data} /></div>`
 
