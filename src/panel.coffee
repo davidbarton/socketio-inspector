@@ -36,6 +36,7 @@ ItemsList = React.createClass
 Item = React.createClass
   handleClick: (e) ->
     e.selectedIndex = this.props.index
+    console.log e.selectedIndex
 
   render: () ->
     `<li onClick={this.handleClick}>{this.props.data}</li>`

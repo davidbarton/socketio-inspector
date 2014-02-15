@@ -4,8 +4,22 @@
 
 .header {
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #cdcdcd;
   height: 35px;
+
+  .col {
+    &.data {
+      line-height: 35px;
+    }
+  }
+}
+
+.content {
+  .data {
+    height: 100%;
+    background: #ededed;
+    padding: 10px;
+  }
 }
 
 .header, .content {
@@ -14,9 +28,12 @@
 
     &.name {
       width: 20%;
+      border-right: 1px solid #cdcdcd;
+      padding-left: 4px;
+      height: 100%;
 
       div.under {
-        color: gray;
+        color: #cdcdcd;
       }
 
       ul {
@@ -25,9 +42,10 @@
 
         li {
           list-style: none;
-          border-bottom: 1px solid gray;
+          border-bottom: 1px solid #cdcdcd;
           min-height: 25px;
           line-height: 1.4;
+          padding: 10px;
 
           &:nth-child(even) {
             background: #f3f3f3;
@@ -38,6 +56,7 @@
 
     &.data {
       width: 80%;
+      padding-left: 4px;
     }
   }
 }
