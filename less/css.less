@@ -2,6 +2,14 @@
   -webkit-box-sizing: border-box;
 }
 
+body {
+  font-size: 12px;
+  line-height: 120%;
+  color: #222;
+  font-family: Lucida Grande, sans-serif;
+  cursor: default;
+}
+
 .header {
   width: 100%;
   border-bottom: 1px solid #cdcdcd;
@@ -11,14 +19,31 @@
     &.data {
       line-height: 35px;
     }
+
+    &.name {
+      padding-top: 3px;
+    }
   }
 }
 
-.content {
+div.content {
   .data {
     height: 100%;
     background: #ededed;
     padding: 10px;
+  }
+
+  .col.name {
+    padding-left: 0;
+  }
+
+  .col.data {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  ul li {
+    cursor: pointer;
   }
 }
 
@@ -43,9 +68,9 @@
         li {
           list-style: none;
           border-bottom: 1px solid #cdcdcd;
-          min-height: 25px;
-          line-height: 1.4;
-          padding: 10px;
+          height: 35px;
+          line-height: 35px;
+          padding-left: 8px;
 
           &:nth-child(even) {
             background: #f3f3f3;
