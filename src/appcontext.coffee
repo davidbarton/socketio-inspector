@@ -2,10 +2,6 @@
 @jsx React.DOM
 ###
 
-port = chrome.extension.connect { name: "socketio-inspector" }
-port.onMessage.addListener (msg) ->
-  console.log 'new message: ', msg
-
 AppContext = React.createClass
   getInitialState: () ->
     data: [ {reqId: 'init0', reqData: {data: 'abcd0'}}]
@@ -39,7 +35,7 @@ Item = React.createClass
     console.log e.selectedIndex
 
   render: () ->
-    `<li onClick={this.handleClick}>{this.props.data}</li>`
+    `<li onClick={this.handleClick}>{this.props.index}</li>`
 
 Detail = React.createClass
   render: () ->
