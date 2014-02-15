@@ -9,9 +9,16 @@ hack = (name, socket) ->
   fn = socket[name]
   socket[name] = (arg...) ->
     sendMessage JSON.stringify arg
-    fn.apply socket, arg
+    fn.apply socket, arguments
 
-for k, socket of io.sockets
-  for e, namespace of socket.namespaces
-    for name in ['emit', '$emit']
-      hack name, namespace
+socketHack = ->
+  for k, socket of io.sockets
+    for e, namespace of socket.namespaces
+      for name in ['emit', '$emit']
+        hack name, namespace
+
+socketHack()
+con = io.connect
+io.connect = ->
+  socketHack()
+  con.apply io, arguments
