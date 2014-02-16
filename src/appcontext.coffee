@@ -18,7 +18,7 @@ AppContext = React.createClass
     friends = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].friends else []
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
-        <div className="col name">Time <div className="under">Session ID</div></div>
+        <div className="col name">Time <div className="under">Session id, type</div></div>
         <div className="col data">Data</div>
       </div>
       <div className="content">
@@ -33,11 +33,11 @@ ItemsList = React.createClass
     currSelected = this.props.selected
     items = this.props.data.map (item, index) ->
       selected = currSelected is index
-      `<Item data={item.rawData} index={index} selected={selected} />`
+      `<MenuItem data={item.rawData} index={index} selected={selected} />`
     return `<ul>{items}</ul>`
 
 
-Item = React.createClass
+MenuItem = React.createClass
   handleClick: (e) ->
     e.selectedIndex = this.props.index
     return
@@ -56,7 +56,8 @@ Item = React.createClass
 
     `<li onClick={this.handleClick} className={className}>
       <strong>{reqDate.getHours()}:{this.twoDigit(reqDate.getMinutes())}:{this.twoDigit(reqDate.getSeconds())}</strong>:<small>{this.twoDigit(reqDate.getMilliseconds())}</small><br/>
-      <small>{this.props.data.socket.sessionid}</small>
+      <small>{this.props.data.socket.sessionid}</small><br />
+      <small>{this.props.data.args[0]}</small>
     </li>`
 
 
@@ -116,7 +117,7 @@ Friend = React.createClass
 PlainDataDetail = React.createClass
   render: () ->
     return `<span></span>` unless this.props.data
-    data = JSON.stringify this.props.data
+    data = JSON.stringify this.props.data, null, 4
     return `<div className="plainDetailBlock"><pre>{data}</pre></div>`
 
 
@@ -132,33 +133,3 @@ ExpandedDataDetail = React.createClass
 
 appContext = React.renderComponent `<AppContext />`, document.getElementById 'content'
 
-
-
-
-
-# Tweet = React.createClass
-#   render: () ->
-#     return `<li>{this.props.text}</li>`
-
-# TweetList = React.createClass
-#   render: () ->
-#     tweets = this.props.data.map (tweet) ->
-#       return `<Tweet text={tweet.text} />`
-#     return `<div><ul>{tweets}</ul></div>`
-
-# TweetBox = React.createClass
-#   addTweet: (tweet) ->
-#     tweets = this.state.data
-#     newTweets = tweets.concat [tweet]
-#     newTweets.splice(0, 1) if newTweets.length > 15
-#     this.setState { data: newTweets }
-#   getInitialState: () ->
-#     return { data: [] }
-#   componentWillMount: () ->
-#     self = this
-#     chrome.devtools.network.onRequestFinished.addListener (request) ->
-#       if request?
-#         request.getContent (data, encoding) ->
-#           self.addTweet data
-#   render: () ->
-#     return `<div><h1>Hello</h1><TweetList data={this.state.data} /></div>`
