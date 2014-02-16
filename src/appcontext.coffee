@@ -5,6 +5,7 @@
 AppContext = React.createClass
   getInitialState: () ->
     items: []
+    selected: 0
 
   handleClick: (e) ->
     this.setState selected: e.selectedIndex
@@ -14,11 +15,11 @@ AppContext = React.createClass
     detailData = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].rawData else ''
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
-        <div className="col name">Name <div className="under">Path</div></div>
+        <div className="col name">Session ID <div className="under">Host - transport</div></div>
         <div className="col data">Data</div>
       </div>
       <div className="content">
-        <div id="leftPanel" className="col name"><ItemsList data={itemsData} /></div>
+        <div id="leftPanel" className="col name"><ItemsList data={itemsData} selected={this.state.selected} /></div>
         <div id="rightPanel" className="col data"><Detail data={detailData} /></div>
       </div>
     </div>`
@@ -26,8 +27,10 @@ AppContext = React.createClass
 
 ItemsList = React.createClass
   render: () ->
+    currSelected = this.props.selected
     items = this.props.data.map (item, index) ->
-      `<Item data={item} index={index} />`
+      selected = currSelected is index
+      `<Item data={item.rawData} index={index} selected={selected} />`
     return `<ul>{items}</ul>`
 
 
@@ -37,23 +40,36 @@ Item = React.createClass
     console.log e.selectedIndex
 
   render: () ->
-    `<li onClick={this.handleClick}>{this.props.index}</li>`
+    reqDate = new Date this.props.data.time
+    className = if this.props.selected then 'selected' else 'not-selected'
+    `<li onClick={this.handleClick} className={className}>
+      <strong>{reqDate.getHours()}:{reqDate.getMinutes()}:{reqDate.getSeconds()}</strong><br/>
+      <small>{this.props.data.socket.sessionid}</small>
+    </li>`
 
 
 Detail = React.createClass
 
   formatObjectAsHtml: (obj) ->
-    el = prettyPrint this.props.data.args,
+    el = prettyPrint obj,
       expanded: true
       maxDeph: 10
     el.outerHTML
 
   render: () ->
+    return `<div id="itemDetail"> -- </div>` unless this.props.data
     html = ""
-    if this.props.data
-      html += this.formatObjectAsHtml this.props.data.args
-      html += this.formatObjectAsHtml this.props.data.socket
-    `<div id="itemDetail" dangerouslySetInnerHTML={{__html: html}} />`
+    html += '<h2>Arguments</h2>'
+    html += this.formatObjectAsHtml this.props.data.args
+    html += '<h2>Socket</h2>'
+    html += this.formatObjectAsHtml this.props.data.socket
+    `<div id="itemDetail">
+      <div className="itemDesc">
+        <strong>{this.props.data.socket.sessionid}</strong><br/>
+        <small>{this.props.data.socket.host}:{this.props.data.socket.port}</small> - <small>{this.props.data.socket.transport}</small>
+      </div>
+      <div id="htmlData" dangerouslySetInnerHTML={{__html: html}} />
+    </div>`
 
 
 appContext = React.renderComponent `<AppContext />`, document.getElementById 'content'
