@@ -9,9 +9,8 @@ AppContext = React.createClass
     expanded: yes
 
   handleClick: (e) ->
-    this.setState selected: e.selectedIndex if e.selectedIndex?
-    this.setState expanded: e.expanded if e.expanded?
-
+    this.setState {selected: e.selectedIndex, expanded: yes} if e.selectedIndex?
+    this.setState {expanded: e.expanded} if e.expanded?
 
   render: () ->
     itemsData = this.state.items
@@ -58,10 +57,12 @@ Detail = React.createClass
 
   handleClickEE: (e) ->
     e.expanded = yes
+    e.selectedIndex = null
     return
 
   handleClickNE: (e) ->
     e.expanded = no
+    e.selectedIndex = null
     return
 
   render: () ->
