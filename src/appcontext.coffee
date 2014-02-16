@@ -15,7 +15,7 @@ AppContext = React.createClass
     detailData = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].rawData else ''
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
-        <div className="col name">Session ID <div className="under">Host - transport</div></div>
+        <div className="col name">Time <div className="under">Session ID</div></div>
         <div className="col data">Data</div>
       </div>
       <div className="content">
@@ -39,11 +39,14 @@ Item = React.createClass
     e.selectedIndex = this.props.index
     console.log e.selectedIndex
 
+  twoDigit: (n) ->
+    if n < 10 then '0'+n else n
+
   render: () ->
     reqDate = new Date this.props.data.time
     className = if this.props.selected then 'selected' else 'not-selected'
     `<li onClick={this.handleClick} className={className}>
-      <strong>{reqDate.getHours()}:{reqDate.getMinutes()}:{reqDate.getSeconds()}</strong><br/>
+      <strong>{reqDate.getHours()}:{this.twoDigit(reqDate.getMinutes())}:{this.twoDigit(reqDate.getSeconds())}</strong>:<small>{this.twoDigit(reqDate.getMilliseconds())}</small><br/>
       <small>{this.props.data.socket.sessionid}</small>
     </li>`
 
@@ -58,19 +61,29 @@ Detail = React.createClass
 
   render: () ->
     return `<div id="itemDetail"> -- </div>` unless this.props.data
-    html = ""
-    html += '<h2>Arguments</h2>'
-    html += this.formatObjectAsHtml this.props.data.args
-    html += '<h2>Socket</h2>'
-    html += this.formatObjectAsHtml this.props.data.socket
     `<div id="itemDetail">
-      <div className="itemDesc">
-        <strong>{this.props.data.socket.sessionid}</strong><br/>
-        <small>{this.props.data.socket.host}:{this.props.data.socket.port}</small> - <small>{this.props.data.socket.transport}</small>
-      </div>
-      <div id="htmlData" dangerouslySetInnerHTML={{__html: html}} />
+      <DataDetail data={this.props.data} />
     </div>`
 
+
+DataDetail = React.createClass
+  formatObjectAsHtml: (obj) ->
+    el = prettyPrint obj,
+      expanded: true
+      maxDeph: 10
+    el.outerHTML
+
+  render: () ->
+    return `<span></span>` unless this.props.data
+    html = this.formatObjectAsHtml this.props.data
+    if this.props.name
+      `<div className="detailBlock">
+        <div className="htmlData" dangerouslySetInnerHTML={{__html: html}} />
+      </div>`
+    else
+      `<div className="detailBlock"><h2>{this.props.name}</h2>
+        <div className="htmlData" dangerouslySetInnerHTML={{__html: html}} />
+      </div>`
 
 appContext = React.renderComponent `<AppContext />`, document.getElementById 'content'
 

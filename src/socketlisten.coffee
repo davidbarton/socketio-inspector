@@ -9,22 +9,30 @@ hack = (name, socket) ->
   fn = socket[name]
   socket[name] = (arg...) ->
     payload =
-        args: Array.prototype.slice.call arg
         name: name
+        time: (new Date).getTime()
         socket:
           sessionid: socket.socket.sessionid
           transport: socket.socket.transport.name
           host: socket.socket.options.host
           port: socket.socket.options.port
-        time: (new Date).getTime()
+        args: Array.prototype.slice.call arguments
+
     sendMessage JSON.stringify payload
-    fn.apply socket, arg
+    fn.apply socket, arguments
 
 socketHack = ->
   for k, socket of io.sockets
     for e, namespace of socket.namespaces
       for name in ['emit', '$emit']
         hack name, namespace
+
+
+# for key, socket of io.sockets
+#   _onPacket = socket.onPacket
+#   socket.onPacket = () ->
+#     sendMessage JSON.stringify arguments
+#     _onPacket.apply this, arguments
 
 socketHack()
 con = io.connect
