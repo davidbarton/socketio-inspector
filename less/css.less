@@ -29,17 +29,31 @@ body {
 div.content {
   .data {
     height: 100%;
+    height: calc(~'100% - 35px');
     background: #ededed;
-    padding: 10px;
+    padding-top: 4px;
+
+    .detailBlock h2 {
+      display: none;
+    }
+
+    .htmlData {
+      &> div > table > thead > tr > th {
+        display: none;
+      }
+    }
   }
 
   .col.name {
     padding-left: 0;
+    height: calc(~'100% - 35px');
+    overflow: auto;
   }
 
   .col.data {
     word-wrap: break-word;
     word-break: break-word;
+    overflow: auto;
   }
 
   ul li {
@@ -72,12 +86,20 @@ div.content {
           padding-left: 8px;
           padding-top: 8px;
 
+          small {
+            color: gray;
+          }
+
           &:nth-child(even) {
             background: #f3f3f3;
           }
 
           &.selected {
-            background: #eee;
+            background: rgb(56, 121, 217);
+
+            strong, span, small {
+              color: #fff;
+            }
           }
           &.incoming {
             border-left: 5px solid #F3801E;
