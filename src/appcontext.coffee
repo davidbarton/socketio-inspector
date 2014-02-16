@@ -15,6 +15,7 @@ AppContext = React.createClass
   render: () ->
     itemsData = this.state.items
     detailData = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].rawData else ''
+    friends = if (index = this.state.selected)? and this.state.items[index] then this.state.items[index].friends else []
     `<div id="appContext" onClick={this.handleClick} className="">
       <div className="header">
         <div className="col name">Time <div className="under">Session ID</div></div>
@@ -22,7 +23,7 @@ AppContext = React.createClass
       </div>
       <div className="content">
         <div id="leftPanel" className="col name"><ItemsList data={itemsData} selected={this.state.selected} /></div>
-        <div id="rightPanel" className="col data"><Detail data={detailData} expanded={this.state.expanded}/></div>
+        <div id="rightPanel" className="col data"><Detail selected={this.state.selected} data={detailData} friends={friends} expanded={this.state.expanded}/></div>
       </div>
     </div>`
 
@@ -69,6 +70,7 @@ Detail = React.createClass
     return `<div id="itemDetail"> -- </div>` unless this.props.data
     if this.props.expanded
       `<div id="itemDetail">
+        <div className="friends"><Friends data={this.props.friends} selected={this.props.selected} /></div>
         <ul className="tabs">
           <li onClick={this.handleClickEE} className="active">Table</li>
           <li onClick={this.handleClickNE}>Plain</li>
@@ -83,6 +85,27 @@ Detail = React.createClass
         </ul>
         <PlainDataDetail data={this.props.data} />
       </div>`
+
+
+Friends = React.createClass
+  render: () ->
+    currSelected = this.props.selected
+    items = this.props.data.map (item, index) ->
+      selected = currSelected is index
+      `<Friend data={item.rawData} index={index} selected={selected} />`
+    return `<ul>{items}</ul>`
+
+
+Friend = React.createClass
+  handleClick: (e) ->
+    e.selectedIndex = this.props.index
+    return
+
+  render: () ->
+    className = if this.props.selected then 'selected' else 'not-selected'
+    `<li onClick={this.handleClick} className={className}>{this.props.index}</li>`
+
+
 
 PlainDataDetail = React.createClass
   render: () ->
