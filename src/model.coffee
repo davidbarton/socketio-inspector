@@ -28,6 +28,9 @@ class ModelItem
     @rawData
 
   setFriends: (items) ->
-    for i in items
-      continue if i is @
-      # @friends.push i.getData() if i.getId() is @getId()
+    @friends = []
+    for i, index in items
+      @friends.push index if @isFriend i
+
+  isFriend: (item) ->
+    item isnt @
