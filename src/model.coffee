@@ -33,4 +33,5 @@ class ModelItem
       @friends.push index if @isFriend i
 
   isFriend: (item) ->
+    return false
     item isnt @
