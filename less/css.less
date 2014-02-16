@@ -89,3 +89,35 @@ div.content {
     }
   }
 }
+
+ul.tabs {
+  padding: 0;
+  margin: 20px;
+  border-bottom: 1px solid #000;
+
+  li {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    height: 30px;
+  }
+
+  li.active {
+    height: 31px;
+    position: relative;
+    top: 2px;
+    background: red;
+    border-bottom: #ededed;
+  }
+
+}
+
+pre {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 15px;
+  font-family: "monospace";
+  margin: 20px;
+}

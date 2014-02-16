@@ -6,9 +6,12 @@ AppContext = React.createClass
   getInitialState: () ->
     items: []
     selected: 0
+    expanded: yes
 
   handleClick: (e) ->
-    this.setState selected: e.selectedIndex
+    this.setState selected: e.selectedIndex if e.selectedIndex?
+    this.setState expanded: e.expanded if e.expanded?
+
 
   render: () ->
     itemsData = this.state.items
@@ -20,7 +23,7 @@ AppContext = React.createClass
       </div>
       <div className="content">
         <div id="leftPanel" className="col name"><ItemsList data={itemsData} selected={this.state.selected} /></div>
-        <div id="rightPanel" className="col data"><Detail data={detailData} /></div>
+        <div id="rightPanel" className="col data"><Detail data={detailData} expanded={this.state.expanded}/></div>
       </div>
     </div>`
 
@@ -37,7 +40,7 @@ ItemsList = React.createClass
 Item = React.createClass
   handleClick: (e) ->
     e.selectedIndex = this.props.index
-    console.log e.selectedIndex
+    return
 
   twoDigit: (n) ->
     if n < 10 then '0'+n else n
@@ -53,37 +56,49 @@ Item = React.createClass
 
 Detail = React.createClass
 
-  formatObjectAsHtml: (obj) ->
-    el = prettyPrint obj,
-      expanded: true
-      maxDeph: 10
-    el.outerHTML
+  handleClickEE: (e) ->
+    e.expanded = yes
+    return
+
+  handleClickNE: (e) ->
+    e.expanded = no
+    return
 
   render: () ->
     return `<div id="itemDetail"> -- </div>` unless this.props.data
-    `<div id="itemDetail">
-      <DataDetail data={this.props.data} />
-    </div>`
+    if this.props.expanded
+      `<div id="itemDetail">
+        <ul className="tabs">
+          <li onClick={this.handleClickEE} className="active">Table</li>
+          <li onClick={this.handleClickNE}>Plain</li>
+        </ul>
+        <ExpandedDataDetail data={this.props.data} />
+      </div>`
+    else
+      `<div id="itemDetail">
+        <ul className="tabs">
+          <li onClick={this.handleClickEE}>Table</li>
+          <li onClick={this.handleClickNE} className="active">Plain</li>
+        </ul>
+        <PlainDataDetail data={this.props.data} />
+      </div>`
+
+PlainDataDetail = React.createClass
+  render: () ->
+    return `<span></span>` unless this.props.data
+    data = JSON.stringify this.props.data
+    return `<div className="plainDetailBlock"><pre>{data}</pre></div>`
 
 
-DataDetail = React.createClass
+ExpandedDataDetail = React.createClass
   formatObjectAsHtml: (obj) ->
-    el = prettyPrint obj,
-      expanded: true
-      maxDeph: 10
+    el = prettyPrint obj
     el.outerHTML
 
   render: () ->
     return `<span></span>` unless this.props.data
     html = this.formatObjectAsHtml this.props.data
-    if this.props.name
-      `<div className="detailBlock">
-        <div className="htmlData" dangerouslySetInnerHTML={{__html: html}} />
-      </div>`
-    else
-      `<div className="detailBlock"><h2>{this.props.name}</h2>
-        <div className="htmlData" dangerouslySetInnerHTML={{__html: html}} />
-      </div>`
+    return `<div className="expanedDetailBlock"><div className="htmlData" dangerouslySetInnerHTML={{__html: html}} /></div>`
 
 appContext = React.renderComponent `<AppContext />`, document.getElementById 'content'
 
