@@ -18,7 +18,6 @@ For development on your local machine, take the following steps:
 
 # TODO:
 * [kamil] are websockets working? fix them
-* [david] fix manifest permisions, allow "all pages"
 * [david] separete web pages trafic (now I see mixed comunication from all pages in one list at each page)
 * [petr+honza] filter & search - search realtime through keys and filter by event types (e.g. incoming, outgoing, subscribe, keepalive, reconnect, data)
 * [honza] change orange color to some non agressive one
