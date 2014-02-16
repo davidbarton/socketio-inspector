@@ -53,6 +53,7 @@ MenuItem = React.createClass
       'emit': 'outgoing'
     type = typeNames[this.props.data.name]
     className += " #{type}" if type
+    
 
     `<li onClick={this.handleClick} className={className}>
       <strong>{reqDate.getHours()}:{this.twoDigit(reqDate.getMinutes())}:{this.twoDigit(reqDate.getSeconds())}</strong>:<small>{this.twoDigit(reqDate.getMilliseconds())}</small><br/>
@@ -77,7 +78,6 @@ Detail = React.createClass
     return `<div id="itemDetail"> -- </div>` unless this.props.data
     if this.props.expanded
       `<div id="itemDetail">
-        <div className="friends"><Friends data={this.props.friends} selected={this.props.selected} /></div>
         <ul className="tabs">
           <li onClick={this.handleClickEE} className="active">Table</li>
           <li onClick={this.handleClickNE}>Plain</li>

@@ -15,3 +15,15 @@ For development on your local machine, take the following steps:
 * Check "Developer mode" at upper top corner
 * Hit "Load unpacked extension..." and pick project folder
 * Open DevTools and Extension Tab
+
+# TODO:
+* [kamil] are websockets working? fix them
+* [david] fix manifest permisions, allow "all pages"
+* [david] separete web pages trafic (now I see mixed comunication from all pages in one list at each page)
+* [petr+honza] filter & search - search realtime through keys and filter by event types (e.g. incoming, outgoing, subscribe, keepalive, reconnect, data)
+* [honza] change orange color to some non agressive one
+* [honza+david] improve UX -> limit nesting (too many tables in tables) -> show final data like plan json? -> SHOW DATA FISRT, the first I want to see is main key-value pair (args[0] and args[1]) -> green and blue colors, limit them, maybe on for top levels, not so deep, or maybe make another new tab wit only key-value pair from args
+* put tabs switching to top panel
+* put connection hash next to timestamp (3 lines reduced to 2)
+* package it and publish on chrome market
+* write tests, github static page and publish to github
