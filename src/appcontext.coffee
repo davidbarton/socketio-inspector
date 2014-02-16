@@ -48,6 +48,12 @@ Item = React.createClass
   render: () ->
     reqDate = new Date this.props.data.time
     className = if this.props.selected then 'selected' else 'not-selected'
+    typeNames =
+      '$emit': 'incoming'
+      'emit': 'outgoing'
+    type = typeNames[this.props.data.name]
+    className += " #{type}" if type
+
     `<li onClick={this.handleClick} className={className}>
       <strong>{reqDate.getHours()}:{this.twoDigit(reqDate.getMinutes())}:{this.twoDigit(reqDate.getSeconds())}</strong>:<small>{this.twoDigit(reqDate.getMilliseconds())}</small><br/>
       <small>{this.props.data.socket.sessionid}</small>
