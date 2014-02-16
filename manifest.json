@@ -12,7 +12,7 @@
   }],
   "web_accessible_resources": ["dist/socketlisten.js"],
   "externally_connectable": {
-    "matches": ["*://*.tv.ccl/*", "http://localhost/*", "*://*.parsers.ccl/*"]
+    "matches": [ "http://*/*", "https://*/*" ],
   },
   "background": {
     "scripts": ["dist/background.js"]
