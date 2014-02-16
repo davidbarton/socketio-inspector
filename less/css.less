@@ -121,24 +121,37 @@ div.content {
 
 ul.tabs {
   padding: 0;
-  margin: 20px;
-  border-bottom: 1px solid #000;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  top: 1px;
+  margin-left: 4px;
 
   li {
     border: 1px solid #ccc;
     border-bottom: none;
     display: inline-block;
-    padding: 10px;
+    padding: 4px 10px;
     cursor: pointer;
-    height: 30px;
+
+    border-right: none;
+
+
+
+    &:last-child {
+      border-right: 1px solid #ccc;
+    }
   }
 
   li.active {
-    height: 31px;
-    position: relative;
-    top: 2px;
-    background: red;
     border-bottom: #ededed;
+    background: #fff;
+
+    background-image: -webkit-linear-gradient(top, #FDFCFC, #FBF9F9 50%, #F7F5F6 50%, #F2F0F0);
+
+        &:hover {
+      background: linear-gradient(to bottom, #fcfcfc 0%,#fbf9f9 50%,#f7f5f6 50%,#fcfcfc 100%);
+    }
   }
 
 }
@@ -148,5 +161,5 @@ pre {
   background: #fff;
   padding: 15px;
   font-family: "monospace";
-  margin: 20px;
+  margin: 15px 0;
 }
