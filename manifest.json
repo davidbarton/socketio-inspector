@@ -1,7 +1,7 @@
 {
   "name": "SocketIO Inspector",
-  "version": "0.1.1",
-  "description": "Made with love to sockets.",
+  "version": "0.1.2",
+  "description": "Made with love for sockets",
   "devtools_page": "devtools.html",
   "options_page": "panel.html",
   "manifest_version": 2,
@@ -12,7 +12,7 @@
   }],
   "web_accessible_resources": ["dist/socketlisten.js"],
   "externally_connectable": {
-    "matches": [ "http://*/*", "https://*/*" ],
+    "matches": ["*://*.tv.ccl/*", "http://localhost/*", "*://*.parsers.ccl/*"]
   },
   "background": {
     "scripts": ["dist/background.js"]

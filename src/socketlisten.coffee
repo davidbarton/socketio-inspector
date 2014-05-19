@@ -1,11 +1,16 @@
-# injected into web page js, override io emit and on event here and send events by chrome messages into background.js
-# how about chrom extension id? can I inject it from extension?
+# ABOUT
+# Injected into web page js
+# Overrides io "emit" and "on" events with listener
+# Send catched events by chrome messages into background.js
+
+# TODO
+# How about chrom extension id? can I inject it from extension?
 
 sendMessage = (msg) ->
   chrome.runtime.sendMessage extensionId, msg, (res) ->
     console.log res if res?
 
-hack = (name, socket) ->
+attachListener = (name, socket) ->
   fn = socket[name]
   socket[name] = (arg...) ->
     payload =
@@ -25,17 +30,12 @@ socketHack = ->
   for k, socket of io.sockets
     for e, namespace of socket.namespaces
       for name in ['emit', '$emit']
-        hack name, namespace
+        attachListener name, namespace
 
-
-# for key, socket of io.sockets
-#   _onPacket = socket.onPacket
-#   socket.onPacket = () ->
-#     sendMessage JSON.stringify arguments
-#     _onPacket.apply this, arguments
-
-socketHack()
-con = io.connect
-io.connect = ->
+# Currently works only when socketio variable name is "io"
+if io?
   socketHack()
-  con.apply io, arguments
+  con = io.connect
+  io.connect = ->
+    socketHack()
+    con.apply io, arguments

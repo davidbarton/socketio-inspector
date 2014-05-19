@@ -1,6 +1,6 @@
 # SocketIO Inspector
 
-This is Chrome extensions expanding DevTools by adding SocketIO Inspector tab. You can observe your socket communication in pretty format.
+Chrome extensions expanding DevTools by adding SocketIO Inspector tab. You can observe your socket communication in pretty format.
 
 # How to run?
 
@@ -8,7 +8,7 @@ For development on your local machine, take the following steps:
 * First you'll need to make sure your system has a c++ compiler. For OSX, XCode will work, for Ubuntu, the `build-essential` and `libssl-dev` packages work.
 * install nvm `curl https://raw.github.com/creationix/nvm/master/install.sh | sh`
 * use nvm to install node and npm `nvm install 0.10`
-* install CoffeeScript and Gulp globally `npm install -g coffee-script gulp`
+* install CoffeeScript and Gulp globally `npm install -g coffee-script-redux gulp`
 * install node modules `npm install`
 * in shell, type `gulp develop` it builds your src files into dist dir
 * Open [chrome://extensions/](chrome://extensions/)
@@ -26,3 +26,6 @@ For development on your local machine, take the following steps:
 * put connection hash next to timestamp (3 lines reduced to 2)
 * package it and publish on chrome market
 * write tests, github static page and publish to github
+* allow turn on/off the inspector (in settings)
+* add support for page whitelist (run only on whitelisted, otherwise stay shuted down)
+* add option for one time run on page
